@@ -1,0 +1,33 @@
+<script setup>
+
+</script>
+
+<template>
+  <div>
+    <h1 class="name">CRM - Customer Relationship Management</h1>
+    <!-- тут должны быть и другие доп функции по типу личного кабинета -->
+     <h1>личный кабинет</h1>
+  </div>
+</template>
+
+<style scoped>
+*{
+  margin: 0;
+  padding: 0;
+}
+
+div{
+    background-color: rgb(39, 39, 39);
+    color: #fff;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    top: -1vh;
+    left: -1vh;
+    padding: 3vh;
+}
+
+.name{
+    font-size: 5vh;
+}
+</style>
