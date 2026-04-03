@@ -1,23 +1,23 @@
 <script setup lang="ts">
-// store
-import { useUrl } from '~/store/url';
-import { useUserData } from '~/store/userData';
-let userData = useUserData();
-let url = useUrl();
-
-// router
 let router = useRouter();
 
 // тут мы явно указываем ему какой лейаут выбрать для этой страницы
 definePageMeta({
     layout: "entrance-layout"
 });
+
 </script>
 
 <template>
     <section class="content">
         <div class="form">
-            <h1>Вход</h1>
+            <h1>Регистрация</h1>
+
+            <h2>Имя</h2>
+            <input type="text">
+
+            <h2>Фамилия</h2>
+            <input type="text">
 
             <h2>Логин</h2>
             <input type="email">
@@ -26,8 +26,8 @@ definePageMeta({
             <input type="password">
 
             <section class="btms">
-                <UIcomponentsButton value="Вход" color="#000" background="white"/>
-                <UIcomponentsButton @click="router.push('/registration')" value="Регистрация" color="#fff" background="rgb(39, 39, 39)"/>
+                <UIcomponentsButton @click="router.push('/entrance')" value="Вход" color="#000" background="white"/>
+                <UIcomponentsButton value="Регистрация" color="#fff" background="rgb(39, 39, 39)"/>
             </section>
         </div>
     </section>
@@ -49,7 +49,7 @@ definePageMeta({
 .form{
     padding: 4vh 4vh 6vh 4vh;
     border-radius: 2vh;
-    margin-top: 20vh;
+    margin-top: 13vh;
     flex-direction: column;
     box-shadow: 0vh 0vh 1.5vh rgb(131, 131, 131);
     width: 60vh;
