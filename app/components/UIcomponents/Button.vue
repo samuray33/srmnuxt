@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 let props = defineProps({
     value: String,
     color: String,

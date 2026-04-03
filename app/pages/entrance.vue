@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 // тут мы явно указываем ему какой лейаут выбрать для этой страницы
 definePageMeta({
     layout: "entrance-layout"
