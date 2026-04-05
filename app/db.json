@@ -1,25 +1,29 @@
 {
-    "users": [
-        {
-            "name": "Admin",
-            "surname": "Admin",
-            "email": "admin@gmail.com",
-            "password": "admin",
-            "role": "admin"
-        },
-        {
-            "name": "Dima",
-            "surname": "Dimov",
-            "email": "dimon@gmail.com",
-            "password": "dima1",
-            "role": "user"
-        },
-        {
-            "name": "katya",
-            "surname": "katyav",
-            "email": "katya@gmail.com",
-            "password": "katya1",
-            "role": "user"
-        }
-    ]
+  "users": [
+    {
+      "name": "Admin",
+      "surname": "Admin",
+      "email": "admin@gmail.com",
+      "password": "admin",
+      "role": "admin",
+      "id": "rTYAQUUiR7w"
+    },
+    {
+      "name": "Dima",
+      "surname": "Dimov",
+      "email": "dimon@gmail.com",
+      "password": "dima1",
+      "role": "user",
+      "id": "PgP3uftO78k"
+    },
+    {
+      "name": "katya",
+      "surname": "katyav",
+      "email": "katya@gmail.com",
+      "password": "katya1",
+      "role": "user",
+      "id": "k-BIJQY4t7k"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
