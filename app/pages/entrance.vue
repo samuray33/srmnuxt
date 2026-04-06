@@ -12,21 +12,85 @@ let router = useRouter();
 definePageMeta({
     layout: "entrance-layout"
 });
+
+// type for dataForm
+type TDataForm = {
+    email: string,
+    password: string
+}
+// получение данных из form
+let dataForm: TDataForm = reactive({
+    email: "",
+    password: ""
+});
+
+
+// type for useFeatch
+type TUser = {
+    name: string,
+    surname: string,
+    email: string,
+    password: string,
+    role: "admin" | "user"
+    id: number;
+}
+// получение данных
+let {data, error: userError, refresh: userRefresh, pending: userPending} = await useFetch<TUser[]>(url.userUrl, {
+    method: "GET",
+    immediate: false
+});
+//проверка есть ли такой пользователь 
+const getUsers = async() => {
+    await userRefresh();
+
+    if(userError.value){
+        alert("ошибка сервера");
+        return;
+    }
+    if(!data.value){
+        alert("Ошибка с получением данных");
+        return;
+    }
+    // поиск пользователя по критериям
+    const getUser = data.value.find(user => user.password == dataForm.password && user.email == dataForm.email);
+
+    // если пользователь найден то переход(пока нету) если нет то return
+    if(!getUser){
+        alert("Нету такого пользователя");
+        dataForm.email = "";
+        dataForm.password = "";
+        return;
+    }else{
+        // Добавление данных пользователя в pinia
+        userData.userName = getUser.name;
+        userData.userSurname = getUser.surname;
+        userData.userEmail = getUser.email;
+        userData.userPassword = getUser.password;
+        userData.userRole = getUser.role;
+        userData.userId = getUser.id;
+
+        // переход на главную страницу
+        router.push('/');
+    }
+}
 </script>
 
 <template>
     <section class="content">
-        <div class="form">
+        <div style="margin-top: 35vh; font-size: 3vh;" v-if="userPending" class="pending">
+            <h1 style="text-align: center">Загрузка.....</h1>
+        </div>
+        <div v-else class="form">
             <h1>Вход</h1>
 
             <h2>Логин</h2>
-            <input type="email">
+            <input v-model="dataForm.email" type="email">
 
             <h2>Пароль</h2>
-            <input type="password">
+            <input v-model="dataForm.password" type="password">
 
             <section class="btms">
-                <UIcomponentsButton value="Вход" color="#000" background="white"/>
+                <UIcomponentsButton @click="getUsers" value="Вход" color="#000" background="white"/>
                 <UIcomponentsButton @click="router.push('/registration')" value="Регистрация" color="#fff" background="rgb(39, 39, 39)"/>
             </section>
         </div>

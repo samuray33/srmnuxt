@@ -5,6 +5,7 @@ export const useUserData = defineStore('userData', () => {
     let userEmail = ref<string>("");
     let userPassword  = ref<string>("");
     let userRole = ref<string>("");
+    let userId = ref<number>();
 
-    return {userName, userSurname, userEmail, userPassword, userRole}
+    return {userName, userSurname, userEmail, userPassword, userRole, userId}
 })

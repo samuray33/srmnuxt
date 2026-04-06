@@ -45,7 +45,7 @@ let addUser =  async () => {
         alert("не все поля заполнены");
         return;
     }
-    addUserRefresh();
+    await addUserRefresh();
     await router.push("/entrance");
 }
 
