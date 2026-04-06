@@ -23,6 +23,14 @@
       "password": "katya1",
       "role": "user",
       "id": "k-BIJQY4t7k"
+    },
+    {
+      "name": "test",
+      "surname": "test",
+      "email": "test@gmail.com",
+      "password": "test1",
+      "role": "user",
+      "id": "13nooGo2iO4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
