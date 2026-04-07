@@ -1,12 +1,15 @@
 <script setup lang="ts">
-
+// store
+import LeftBar from '~/components/leftBar.vue';
+import { useUserData } from '~/store/userData';
+let userData = useUserData()
 </script>
 
 <template>
-  <div>
+  <div class="meny">
+    <h1>Роль: {{ userData.userRole }}</h1>
     <h1 class="name">CRM - Customer Relationship Management</h1>
-    <!-- тут должны быть и другие доп функции по типу личного кабинета -->
-     <h1>личный кабинет</h1>
+    <h1>личный кабинет</h1>
   </div>
 </template>
 
@@ -17,17 +20,34 @@
 }
 
 div{
-    background-color: rgb(39, 39, 39);
-    color: #fff;
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    top: -1vh;
-    left: -1vh;
-    padding: 3vh;
+  background-color: rgb(39, 39, 39);
+  color: #fff;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  top: -1vh;
+  left: -1vh;
+  padding: 3vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+h1{
+  font-size: 3vh;
+  border: 0.1vh solid #fff;
+  padding: 1vh;
+  border-radius: 1vh;
+  cursor: pointer;
+  background-color: #fff;
+  color: #000;
 }
 
 .name{
-    font-size: 5vh;
+  font-size: 5vh;
+  color: #fff;
+  background-color: rgb(39, 39, 39);
+  border: none;
+  cursor: default;
 }
 </style>

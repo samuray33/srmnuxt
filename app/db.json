@@ -39,14 +39,6 @@
       "password": "1",
       "role": "user",
       "id": "IYDa6MxUTBw"
-    },
-    {
-      "name": "2",
-      "surname": "2",
-      "email": "2",
-      "password": "2",
-      "role": "user",
-      "id": "_V53BXYUBtE"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
