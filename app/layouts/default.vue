@@ -1,22 +1,35 @@
 <script setup lang="ts">
 // store
-import LeftBar from '~/components/leftBar.vue';
 import { useUserData } from '~/store/userData';
 let userData = useUserData()
+
+// router
+let router = useRouter();
+
 </script>
 
 <template>
   <div class="meny">
     <h1>Роль: {{ userData.userRole }}</h1>
     <h1 class="name">CRM - Customer Relationship Management</h1>
-    <h1>личный кабинет</h1>
+    <h1 @click="router.push('/')">личный кабинет</h1>
   </div>
+  
+  <!-- leftBar -->
+  <aside>
+    <LeftBar />
+  </aside>
 </template>
 
 <style scoped>
 *{
   margin: 0;
   padding: 0;
+}
+aside{
+  position: fixed;
+  top: 10vh;
+  left: -1vh;
 }
 
 div{

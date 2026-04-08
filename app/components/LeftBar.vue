@@ -1,5 +1,12 @@
 <script setup lang="ts">
 // проверка возможности слотов
+// router
+let router = useRouter();
+
+// выход
+let exit = () => {
+    router.push('/entrance');
+}
 </script>
 
 <template>
@@ -7,8 +14,7 @@
     <section class="leftBar">
         <h1>Личный кабинет</h1>
         <h1>Свободные задачи</h1>
-        <h1>Выполненые задачи</h1>
-        <h1>Выйте из аккаунта</h1>
+        <h1 @click="exit">Выйте из аккаунта</h1>
     </section>
    </slot>
 </template>
@@ -17,11 +23,10 @@
 section{
     font-size: 2vh;
     width: 45vh;
-    height: 70vh;
+    height: 85vh;
     padding: 3vh 2vh;
     color: #fff;
     background-color: rgb(39, 39, 39);
-    border-radius: 2vh;
 }
 h1{
     margin-bottom: 2vh;

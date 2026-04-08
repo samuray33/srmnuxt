@@ -2,16 +2,14 @@
 // store
 import { useUserData } from '~/store/userData';
 let userData = useUserData();
-
-
 </script>
 
 <template>
     <section class="content">
       <!-- leftBar -->
-      <aside>
+      <!-- <aside>
         <LeftBar />
-      </aside>
+      </aside> -->
 
       <section class="rightData">
         <div class="user">
@@ -37,11 +35,11 @@ let userData = useUserData();
 	margin: 0 auto;
 }
 
-aside{
+/* aside{
   position: fixed;
   top: 10vh;
   left: -1vh;
-}
+} */
 
 .rightData{
   margin-top: 15vh;
