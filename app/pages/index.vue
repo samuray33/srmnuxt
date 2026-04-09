@@ -6,11 +6,6 @@ let userData = useUserData();
 
 <template>
     <section class="content">
-      <!-- leftBar -->
-      <!-- <aside>
-        <LeftBar />
-      </aside> -->
-
       <section class="rightData">
         <div class="user">
           <h1> Пользователь: {{ userData.userName }} {{ userData.userSurname }}</h1>
@@ -34,12 +29,6 @@ let userData = useUserData();
 .content{
 	margin: 0 auto;
 }
-
-/* aside{
-  position: fixed;
-  top: 10vh;
-  left: -1vh;
-} */
 
 .rightData{
   margin-top: 15vh;

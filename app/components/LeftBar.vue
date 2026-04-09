@@ -1,5 +1,8 @@
 <script setup lang="ts">
-// проверка возможности слотов
+// state
+import { useUserData } from '~/store/userData';
+let userData = useUserData();
+
 // router
 let router = useRouter();
 
@@ -14,6 +17,7 @@ let exit = () => {
     <section class="leftBar">
         <h1>Личный кабинет</h1>
         <h1>Свободные задачи</h1>
+        <h1 v-if="userData.userRole == 'admin'">Создать задачу</h1>
         <h1 @click="exit">Выйте из аккаунта</h1>
     </section>
    </slot>
