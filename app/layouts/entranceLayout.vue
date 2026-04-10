@@ -4,7 +4,7 @@
 
 <template>
   <div>
-    <h1 class="name">CRM - Customer Relationship Management</h1>
+    <h1 class="name">TT - Task Tracker</h1>
   </div>
 </template>
 

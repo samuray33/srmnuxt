@@ -11,7 +11,7 @@ let router = useRouter();
 <template>
   <div class="meny">
     <h1>Роль: {{ userData.userRole }}</h1>
-    <h1 class="name">CRM - Customer Relationship Management</h1>
+    <h1 class="name">TT - Task Tracker</h1>
     <h1 @click="router.push('/')">личный кабинет</h1>
   </div>
   

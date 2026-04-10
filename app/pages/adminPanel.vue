@@ -1,7 +1,9 @@
 <script setup lang="ts">
 // store
+import { useUrl } from '~/store/url';
 import { useUserData } from '~/store/userData';
 let userData = useUserData();
+let url = useUrl();
 
 // получение наших пользователей
 type TUser = {
@@ -10,12 +12,23 @@ type TUser = {
     email: string,
     password: string,
     role: "admin" | "user",
-    id: number
+    id: string
 }
 let {data: usersData, error: usersError, refresh: usersRefresh, pending: usersPending} = await useFetch<TUser[]>('http://localhost:4000/users', {
     method: "GET"
 });
-console.log(usersData.value);
+
+// удаление пользователя (поиск проийсходит только по id если будешь проверять)
+let delUser = async(id: string) => {
+  try{
+    await fetch(url.userUrl + "/" + id, {
+      method: "DELETE",
+    });
+    usersRefresh();
+  }catch(error){
+    alert("Не получилось удалить, ошибка: " + error)
+  }
+}
 </script>
 
 <template>
@@ -32,7 +45,10 @@ console.log(usersData.value);
         </div>
 
         <div class="users">
-            <h1 v-for="user in usersData">{{ user.name }}, {{ user.surname }} | email: {{ user.email }}</h1>
+            <h1 v-for="user in usersData" :key="user.id">
+              {{ user.name }}, {{ user.surname }} | email: {{ user.email }} | password: {{ user.password }}
+              <UIcomponentsButton value="Удалить" color="#000" background="#fff" @click="delUser(user.id)"/>
+            </h1>
         </div>
       </section>
     </section>
@@ -70,6 +86,9 @@ console.log(usersData.value);
     padding: 2vh 2vh;
     border-radius: 1vh;
     transition: 0.3s all;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .users > h1:hover{
     background-color: rgb(39, 39, 39);

@@ -54,7 +54,7 @@ const getUsers = async() => {
     // поиск пользователя по критериям
     const getUser = data.value.find(user => user.password == dataForm.password && user.email == dataForm.email);
 
-    // если пользователь найден то переход(пока нету) если нет то return
+    // если пользователь найден то переход если нет то return
     if(!getUser){
         alert("Нету такого пользователя");
         dataForm.email = "";
@@ -69,8 +69,15 @@ const getUsers = async() => {
         userData.userRole = getUser.role;
         userData.userId = getUser.id;
 
-        // переход на главную страницу
-        router.push('/');
+        // переход на главную страницу или на старницу админа если это админ
+        if(getUser.role === "admin"){
+            router.push('/adminPanel');
+            return;
+        }
+        else{
+            router.push('/');
+            return;
+        }
     }
 }
 </script>
