@@ -14,9 +14,14 @@ type TUser = {
     role: "admin" | "user",
     id: string
 }
-let {data: usersData, error: usersError, refresh: usersRefresh, pending: usersPending} = await useFetch<TUser[]>('http://localhost:4000/users', {
+let {data: usersData, error: usersError, refresh: usersRefresh, pending: usersPending} = await useFetch<TUser[]>(url.userUrl, {
     method: "GET"
 });
+// убераем из массива админа
+let filtUsers = ref<TUser[]>()
+if(usersData.value){
+  filtUsers.value = usersData.value.filter(user => user.role != 'admin');
+}
 
 // удаление пользователя (поиск проийсходит только по id если будешь проверять)
 let delUser = async(id: string) => {
@@ -45,7 +50,7 @@ let delUser = async(id: string) => {
         </div>
 
         <div class="users">
-            <h1 v-for="user in usersData" :key="user.id">
+            <h1 v-for="user in filtUsers" :key="user.id">
               {{ user.name }}, {{ user.surname }} | email: {{ user.email }} | password: {{ user.password }}
               <UIcomponentsButton value="Удалить" color="#000" background="#fff" @click="delUser(user.id)"/>
             </h1>
@@ -77,23 +82,23 @@ let delUser = async(id: string) => {
 }
 
 .users{
-    margin-top: 3vh;
+  margin-top: 3vh;
 }
 .users > h1{
-    font-size: 4vh;
-    border: 0.1vh solid #000;
-    margin-top: 1vh;
-    padding: 2vh 2vh;
-    border-radius: 1vh;
-    transition: 0.3s all;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  font-size: 4vh;
+  border: 0.1vh solid #000;
+  margin-top: 1vh;
+  padding: 2vh 2vh;
+  border-radius: 1vh;
+  transition: 0.3s all;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .users > h1:hover{
-    background-color: rgb(39, 39, 39);
-    color: #fff;
-    transition: 0.3s all;
-    cursor: pointer;
+  background-color: rgb(39, 39, 39);
+  color: #fff;
+  transition: 0.3s all;
+  cursor: pointer;
 }
 </style>

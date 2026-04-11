@@ -6,6 +6,16 @@ let userData = useUserData();
 // router
 let router = useRouter();
 
+// личный кабинет
+let personAcc = () => {
+    if(userData.userRole == 'admin'){
+        router.push('/adminPanel');
+    }
+    else{
+        router.push('/');
+    }
+}
+
 // выход
 let exit = () => {
     router.push('/entrance');
@@ -15,9 +25,9 @@ let exit = () => {
 <template>
    <slot>
     <section class="leftBar">
-        <h1>Личный кабинет</h1>
-        <h1>Свободные задачи</h1>
-        <h1 v-if="userData.userRole == 'admin'">Создать задачу</h1>
+        <h1 @click="personAcc">Личный кабинет</h1>
+        <h1 @click="router.push('/tasks')">{{ userData.userRole == 'admin' ? 'Все задачи' : 'Свободные задачи' }} </h1>
+        <h1 @click="router.push('/createPages')" v-if="userData.userRole == 'admin'">Создать задачу</h1>
         <h1 @click="exit">Выйте из аккаунта</h1>
     </section>
    </slot>

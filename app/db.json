@@ -25,20 +25,35 @@
       "id": "k-BIJQY4t7k"
     },
     {
-      "name": "test",
-      "surname": "test",
-      "email": "test@gmail.com",
-      "password": "test1",
-      "role": "user",
-      "id": "13nooGo2iO4"
-    },
-    {
       "name": "1",
       "surname": "1",
       "email": "1",
       "password": "1",
       "role": "user",
       "id": "DUT_8zThRsw"
+    }
+  ],
+  "tasks": [
+    {
+      "nameTask": "1",
+      "descriptionTask": "1",
+      "importance": "34",
+      "userId": "DUT_8zThRsw",
+      "id": "KkSlzX4EC4I"
+    },
+    {
+      "nameTask": "2",
+      "descriptionTask": "2",
+      "importance": "42",
+      "userId": "k-BIJQY4t7k",
+      "id": "kB4M2uwzgSs"
+    },
+    {
+      "nameTask": "ываываыа",
+      "descriptionTask": "ыаыаыаыаыв",
+      "importance": "100",
+      "userId": "Свободная задача",
+      "id": "k5DFNMYpxWc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
