@@ -19,20 +19,10 @@ let {data: taskData, error: taskError, pending: taskPending, refresh: taskRefres
   method: "GET"
 });
 
-// если пользователь не админ то только свободные если админ то все задчи (и не завершенные)
-let auntifikateTasks = computed(() => {
-  if (!taskData.value) 
-    return [];
+//  завершенные задачи
+let auntifikateTasks = computed(() => {return taskData.value?.filter(task => task.isReady == true)});
 
-  if(userData.userRole == 'admin'){
-    return taskData.value?.filter(task => task.isReady == false);
-  }
-  else{
-    return taskData.value?.filter(task => task.userId == 'Свободная задача' && task.isReady == false);
-  }
-});
-
-// удаление ($fetch - использовать для пользовательских действий не для робота seo так как useFeatch должен рабоать до компиляции)
+// удаление
 let delTask = async(id: string) => {
   try{
     await $fetch(url.taskUrl + '/' + id, {
@@ -50,13 +40,13 @@ let delTask = async(id: string) => {
     <section class="content">
       <section class="rightData">
         <header>
-          <h1> {{ userData.userRole == 'admin' ? 'Все задачи' : 'Свободные задачи'}} </h1>
+          <h1> Готовые задачи </h1>
         </header>
 
         <div class="line"></div>
 
         <div v-for="task in auntifikateTasks?.slice().reverse()" class="tasks">
-          <!-- тут в зависимости от роли будет высвечиватся задачи -->
+          <!-- тут будет высвечиватся задачи -->
            <div>
               <h1 class="nameTask">Название: {{ task.nameTask }}</h1>
               <h2>Доступность: {{ task. userId == 'Свободная задача' ? 'Свободная задача' : 'Задача уже назначена'}}</h2>

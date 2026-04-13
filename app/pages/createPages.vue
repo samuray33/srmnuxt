@@ -30,13 +30,15 @@ type TTask = {
   nameTask: string,
   descriptionTask: string,
   importance: number,
-  userId: string
+  userId: string,
+  isReady: boolean,
 }
 let task = reactive<TTask>({
   nameTask: "",
   descriptionTask: "",
   importance: 0,
-  userId: ""
+  userId: "",
+  isReady: false,
 });
 
 // добавление задачи

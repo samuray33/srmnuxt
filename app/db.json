@@ -37,23 +37,42 @@
     {
       "nameTask": "1",
       "descriptionTask": "1",
-      "importance": "34",
+      "importance": "5",
       "userId": "DUT_8zThRsw",
-      "id": "KkSlzX4EC4I"
+      "isReady": false,
+      "id": "Zhh_jMr5w5w"
     },
     {
       "nameTask": "2",
       "descriptionTask": "2",
-      "importance": "42",
+      "importance": "65",
       "userId": "k-BIJQY4t7k",
-      "id": "kB4M2uwzgSs"
+      "isReady": false,
+      "id": "IOy5ZIYHTSw"
     },
     {
-      "nameTask": "ываываыа",
-      "descriptionTask": "ыаыаыаыаыв",
-      "importance": "100",
+      "nameTask": "3",
+      "descriptionTask": "3",
+      "importance": "28",
+      "userId": "PgP3uftO78k",
+      "isReady": false,
+      "id": "16mgZIjnuDk"
+    },
+    {
+      "nameTask": "4",
+      "descriptionTask": "4",
+      "importance": "44",
       "userId": "Свободная задача",
-      "id": "k5DFNMYpxWc"
+      "isReady": false,
+      "id": "Wzyk2Uh26oo"
+    },
+    {
+      "nameTask": "5",
+      "descriptionTask": "5",
+      "importance": "53",
+      "userId": "Свободная задача",
+      "isReady": true,
+      "id": "nGX3tsxgSo8"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

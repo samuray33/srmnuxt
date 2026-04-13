@@ -28,6 +28,7 @@ let exit = () => {
         <h1 @click="personAcc">Личный кабинет</h1>
         <h1 @click="router.push('/tasks')">{{ userData.userRole == 'admin' ? 'Все задачи' : 'Свободные задачи' }} </h1>
         <h1 @click="router.push('/createPages')" v-if="userData.userRole == 'admin'">Создать задачу</h1>
+        <h1 @click="router.push('/isReadyTasks')" v-if="userData.userRole == 'admin'">Выполненые задачи</h1>
         <h1 @click="exit">Выйте из аккаунта</h1>
     </section>
    </slot>

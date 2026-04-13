@@ -14,8 +14,12 @@ export default defineNuxtRouteMiddleware ((to, from) => {
         return navigateTo('/entrance');
     }
 
-    // если не админ — не пускаем в админку
-    else if (to.path === '/adminPanel' && userData.userRole !== 'admin') {
+    // если не админ — не пускаем в админку(проверяем сразу два to на две страницы)
+    else if ((to.path === '/adminPanel' || to.path === '/isReadyTasks') && userData.userRole !== 'admin') {
         return navigateTo('/entrance');
     }
+    // если проверка одного to
+    // else if (to.path === '/adminPanel' && userData.userRole !== 'admin') {
+    //     return navigateTo('/entrance'); 
+    // }
 }); 
