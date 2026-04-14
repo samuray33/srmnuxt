@@ -34,18 +34,21 @@ let delTask = async(id: string) => {
   
   await taskRefresh();
 }
+
+//открытие подробнее о задачи в виде компонента ради тренеровки(так делать нельзя знаю знаю)
+let Task = ref<boolean>(false);
 </script>
 
 <template>
     <section class="content">
-      <section class="rightData">
+      <section v-if="!Task" class="rightData">
         <header>
           <h1> Готовые задачи </h1>
         </header>
 
         <div class="line"></div>
 
-        <div v-for="task in auntifikateTasks?.slice().reverse()" class="tasks">
+        <div @click="Task = true" v-for="task in auntifikateTasks?.slice().reverse()" class="tasks">
           <!-- тут будет высвечиватся задачи -->
            <div>
               <h1 class="nameTask">Название: {{ task.nameTask }}</h1>
@@ -56,6 +59,11 @@ let delTask = async(id: string) => {
               <UIcomponentsButton v-if="userData.userRole == 'admin'" @click="delTask(task.id)" value="Удалить" background="#000" color="#fff" />
            </div>
         </div>
+      </section>
+
+      <section v-if="Task" class="rightData">
+        <!-- подробнее о задаче -->
+        <TaskIn @close="Task = false"></TaskIn>
       </section>
     </section>
 </template>

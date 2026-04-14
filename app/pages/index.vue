@@ -5,6 +5,9 @@ import { useUserData } from '~/store/userData';
 let userData = useUserData();
 let url = useUrl();
 
+// router
+let router = useRouter();
+
 // type для Tasks
 type TTask = {
   nameTask: string,
@@ -19,11 +22,13 @@ let {data: taskData, error: taskError, pending: taskPending, refresh: taskRefres
 // находим задачи именно этого пользователя 
 let personTasks = taskData.value?.filter(task => task.userId == userData.userId?.toString());
 
+//открытие подробнее о задачи в виде компонента ради тренеровки(так делать нельзя знаю знаю)
+let Task = ref<boolean>(false);
 </script>
 
 <template>
     <section class="content">
-      <section class="rightData">
+      <section v-if="!Task" class="rightData">
         <div class="user">
           <h1> Пользователь: {{ userData.userName }} {{ userData.userSurname }}</h1>
         </div>
@@ -34,11 +39,16 @@ let personTasks = taskData.value?.filter(task => task.userId == userData.userId?
           <h1>Активные задачи</h1>
 
           <!-- задачи именно этого пользователя -->
-           <div v-for="task in personTasks" class="personTasks">
+           <div @click="Task = true" v-for="task in personTasks" class="personTasks">
               <h1>Название: {{ task.nameTask }}</h1>
               <h2>Срочность: {{ task.importance }}/100</h2>
            </div>
         </div>
+      </section>
+
+      <section v-if="Task" class="rightData">
+        <!-- подробнее о задаче -->
+        <TaskIn @close="Task = false"></TaskIn>
       </section>
     </section>
 </template>

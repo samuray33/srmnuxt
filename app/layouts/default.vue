@@ -12,7 +12,7 @@ let router = useRouter();
   <div class="meny">
     <h1>Роль: {{ userData.userRole }}</h1>
     <h1 class="name">TT - Task Tracker</h1>
-    <h1 @click="router.push('/')">личный кабинет</h1>
+    <h1>Пользователь: {{ userData.userName }}</h1>
   </div>
   
   <!-- leftBar -->
