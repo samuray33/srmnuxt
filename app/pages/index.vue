@@ -13,7 +13,9 @@ type TTask = {
   nameTask: string,
   descriptionTask: string,
   importance: number,
-  userId: string
+  userId: string,
+  isReady: boolean,
+  id: string
 }
 // получаем список задач
 let {data: taskData, error: taskError, pending: taskPending, refresh: taskRefresh} = await useFetch<TTask[]>(url.taskUrl, {
@@ -22,8 +24,15 @@ let {data: taskData, error: taskError, pending: taskPending, refresh: taskRefres
 // находим задачи именно этого пользователя 
 let personTasks = taskData.value?.filter(task => task.userId == userData.userId?.toString());
 
-//открытие подробнее о задачи в виде компонента ради тренеровки(так делать нельзя знаю знаю)
+//открытие подробнее о задачи в виде компонента ради тренеровки(так делать нельзя знаю знаю) (и лучше этот кусок передать в store)
 let Task = ref<boolean>(false);
+
+// что бы пропсом указать какой таск открыт в данный момент
+let idTaskActive = ref();
+let taskActive = (id: string) => {
+  Task.value = true;
+  idTaskActive.value = id;
+}
 </script>
 
 <template>
@@ -39,7 +48,7 @@ let Task = ref<boolean>(false);
           <h1>Активные задачи</h1>
 
           <!-- задачи именно этого пользователя -->
-           <div @click="Task = true" v-for="task in personTasks" class="personTasks">
+           <div @click="taskActive(task.id)" v-for="task in personTasks" class="personTasks">
               <h1>Название: {{ task.nameTask }}</h1>
               <h2>Срочность: {{ task.importance }}/100</h2>
            </div>
@@ -48,7 +57,7 @@ let Task = ref<boolean>(false);
 
       <section v-if="Task" class="rightData">
         <!-- подробнее о задаче -->
-        <TaskIn @close="Task = false"></TaskIn>
+        <TaskIn @close="Task = false" :idTaskActive></TaskIn>
       </section>
     </section>
 </template>

@@ -45,8 +45,15 @@ let delTask = async(id: string) => {
   await taskRefresh();
 }
 
-//открытие подробнее о задачи в виде компонента ради тренеровки(так делать нельзя знаю знаю)
+//открытие подробнее о задачи в виде компонента ради тренеровки(так делать нельзя знаю знаю) (и лучше этот кусок передать в store)
 let Task = ref<boolean>(false);
+
+// что бы пропсом указать какой таск открыт в данный момент
+let idTaskActive = ref();
+let taskActive = (id: string) => {
+  Task.value = true;
+  idTaskActive.value = id;
+}
 </script>
 
 <template>
@@ -58,7 +65,7 @@ let Task = ref<boolean>(false);
 
         <div class="line"></div>
 
-        <div @click="Task = true" v-for="task in auntifikateTasks?.slice().reverse()" class="tasks">
+        <div @click="taskActive(task.id)" v-for="task in auntifikateTasks?.slice().reverse()" class="tasks">
           <!-- тут в зависимости от роли будет высвечиватся задачи -->
            <div>
               <h1 class="nameTask">Название: {{ task.nameTask }}</h1>
@@ -73,7 +80,7 @@ let Task = ref<boolean>(false);
 
       <section v-if="Task" class="rightData">
         <!-- подробнее о задаче -->
-        <TaskIn @close="Task = false"></TaskIn>
+        <TaskIn @close="Task = false" :idTaskActive></TaskIn>
       </section>
     </section>
 </template>
