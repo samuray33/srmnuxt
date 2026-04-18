@@ -73,7 +73,7 @@ let taskActive = (id: string) => {
            </div>
            <div class="rightUi">
               <UIcomponentsProgressBar :value="Number(task.importance)" :size="100" />
-              <UIcomponentsButton v-if="userData.userRole == 'admin'" @click="delTask(task.id)" value="Удалить" background="#000" color="#fff" />
+              <UIcomponentsButton v-if="userData.userRole == 'admin'" @click.stop="delTask(task.id)" value="Удалить" background="#000" color="#fff" />
            </div>
         </div>
       </section>
