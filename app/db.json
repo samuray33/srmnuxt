@@ -73,6 +73,14 @@
       "userId": "Свободная задача",
       "isReady": true,
       "id": "nGX3tsxgSo8"
+    },
+    {
+      "nameTask": "какая то задача",
+      "descriptionTask": "gjghjgjgjgjgj",
+      "importance": "100",
+      "userId": "DUT_8zThRsw",
+      "isReady": false,
+      "id": "AQiG6oqFF8U"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

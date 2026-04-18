@@ -18,15 +18,15 @@ let {data: usersData, error: usersError, refresh: usersRefresh, pending: usersPe
     method: "GET"
 });
 // убераем из массива админа
-let filtUsers = ref<TUser[]>()
-if(usersData.value){
-  filtUsers.value = usersData.value.filter(user => user.role != 'admin');
-}
+let filtUsers = computed<TUser[]>(() => {
+    if (!usersData.value) return [];
+    return usersData.value.filter(user => user.role !== 'admin');
+});
 
 // удаление пользователя (поиск проийсходит только по id если будешь проверять)
 let delUser = async(id: string) => {
   try{
-    await fetch(url.userUrl + "/" + id, {
+    await $fetch(url.userUrl + "/" + id, {
       method: "DELETE",
     });
     usersRefresh();

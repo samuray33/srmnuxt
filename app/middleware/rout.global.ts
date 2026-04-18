@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware ((to, from) => {
     const userData = useUserData();
 
     // разрешаем страницу входа
-    if (to.path === '/entrance') {
+    if (to.path === '/entrance' || to.path == '/registration') {
         return;
     }
 
@@ -18,8 +18,4 @@ export default defineNuxtRouteMiddleware ((to, from) => {
     else if ((to.path === '/adminPanel' || to.path === '/isReadyTasks') && userData.userRole !== 'admin') {
         return navigateTo('/entrance');
     }
-    // если проверка одного to
-    // else if (to.path === '/adminPanel' && userData.userRole !== 'admin') {
-    //     return navigateTo('/entrance'); 
-    // }
 }); 
