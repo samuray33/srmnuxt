@@ -22,7 +22,9 @@ let {data: taskData, error: taskError, pending: taskPending, refresh: taskRefres
   method: "GET"
 });
 // находим задачи именно этого пользователя 
-let personTasks = taskData.value?.filter(task => task.userId == userData.userId?.toString());
+let personTasks = computed(() => {
+  return taskData.value?.filter(task => task.userId == userData.userId?.toString() && task.isReady == false)
+});
 
 //открытие подробнее о задачи в виде компонента ради тренеровки(так делать нельзя знаю знаю) (и лучше этот кусок передать в store)
 let Task = ref<boolean>(false);
@@ -32,6 +34,10 @@ let idTaskActive = ref();
 let taskActive = (id: string) => {
   Task.value = true;
   idTaskActive.value = id;
+}
+// обнова списка полсе закрытие компонента
+let refreshTask = () => {
+  taskRefresh();
 }
 </script>
 
@@ -49,7 +55,7 @@ let taskActive = (id: string) => {
 
           <!-- задачи именно этого пользователя -->
            <div @click="taskActive(task.id)" v-for="task in personTasks" class="personTasks">
-              <h1>Название: {{ task.nameTask }}</h1>
+              <h1 style="white-space: normal; word-wrap: break-word;">Название: {{ task.nameTask }}</h1>
               <h2>Срочность: {{ task.importance }}/100</h2>
            </div>
         </div>
@@ -57,7 +63,7 @@ let taskActive = (id: string) => {
 
       <section v-if="Task" class="rightData">
         <!-- подробнее о задаче -->
-        <TaskIn @close="Task = false" :idTaskActive></TaskIn>
+        <TaskIn @close="Task = false" :idTaskActive @refreshTask="refreshTask"></TaskIn>
       </section>
     </section>
 </template>

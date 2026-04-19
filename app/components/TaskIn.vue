@@ -11,7 +11,7 @@ let props = defineProps<{
 }>();
 
 // emits
-let emits = defineEmits(['close'])
+let emits = defineEmits(['close', 'refreshTask']);
 // type для Tasks
 type TTask = {
   nameTask: string,
@@ -35,9 +35,23 @@ let findActiveData = computed(() => {
 });
 
 
+// 1. Указываем, что ждем массив любых объектов (<any[]>)
+let {  data: allUsers } = await useFetch<any[]>(url.userUrl, { method: "GET" });
+
+// 2. Функция поиска
+function getUserName(id: string) {
+  // Проверка: если массив пуст или не загрузился
+  if (!allUsers.value || !Array.isArray(allUsers.value)) return id; 
+  
+  // Теперь TS знает, что это массив, и .find() доступен
+  let user = allUsers.value.find((u) => u.id == id);
+  
+  return user ? user.name : id; 
+}
+
 // type для коментария
 type TComment = {
-  userId: string | undefined | number,
+  userId: string | undefined | number | any,
   taskId: string | undefined,
   comment: string,
   id?: string;
@@ -55,28 +69,31 @@ let commentsThisTask = computed(() => {
 });
 
 // переменные для добавление
-let commentGet = ref<string>();
+let commentGet = ref<string>('');
 // добавление коментария в список
-let addComment = async() => {
-  if(!commentGet.value){
-    alert("Вы не написали коментарий");
+let addComment = async () => {
+  if (!commentGet.value.trim()) {
+    alert("Вы не написали комментарий");
     return;
   }
-  try{
-    let commentBody = ref<TComment>({
+  try {
+    const body = {
       userId: userData.userId,
       taskId: findActiveData.value?.id,
       comment: commentGet.value
-    });
+    };
+
     await $fetch(url.commentUrl, {
-      method:'POST',
-      body: commentBody.value
+      method: 'POST',
+      body: body
     });
-  }catch(error){
-    alert("Не удалось прокоментировать");
+
+    commentGet.value = "";
+    commentsRefresh();
+  } catch (error) {
+    console.error(error);
+    alert("Не удалось прокомментировать");
   }
-  commentGet.value = "";
-  commentsRefresh();
 }
 
 // получение имени пользователя который сейчас ведет это дело
@@ -92,6 +109,47 @@ let userTask = async() => {
   }
 }
 userTask();
+
+// Значенеи и свойства для кнопки взять задача выполнить задача востановить задачу
+let valueTask = computed(() => {
+  if(findActiveData.value?.userId == "Свободная задача"){
+    return "Взять задачу";
+  }
+  if(findActiveData.value?.isReady == true){
+    return "Востановить задачу";
+  }
+  if(findActiveData.value?.isReady == false){
+    return "Задача выполнена"
+  }
+});
+
+// востановить задачу или же выполнить задачу
+const newStatus = !findActiveData.value?.isReady;  // Если сейчас false (не готова), ставим true (готова). И наоборот.
+let isReadyTask = async() => {
+  try{
+    await $fetch(url.taskUrl + '/' + props.idTaskActive, {
+      method: 'PATCH',
+      body: {isReady: newStatus}
+    });
+    emits('refreshTask');
+    emits('close');
+  }catch(error){
+    alert("Не удалось изменить статус задачи");
+  }
+}
+
+// удаление задачи
+let delTask = async() => {
+  try{
+    await $fetch(url.taskUrl + '/' + props.idTaskActive, {
+      method: 'DELETE'
+    });
+    emits('refreshTask');
+    emits('close');
+  }catch(error){
+    alert("не удалось удалить задачу");
+  }
+}
 </script>
 
 <template>
@@ -103,9 +161,9 @@ userTask();
 
         <div class="line"></div>
 
-        <h1>Название задачи: {{ findActiveData?.nameTask }}</h1>
+        <h1 style="white-space: normal; word-wrap: break-word;">Название задачи: {{ findActiveData?.nameTask }}</h1>
         <h2>Статус: {{ userActive ? userActive : "Свободная задача"}}</h2>
-        <h2>Описание Задачи: <br /> {{ findActiveData?.descriptionTask }}</h2>
+        <h2 style="white-space: normal; word-wrap: break-word;">Описание Задачи: <br /> {{ findActiveData?.descriptionTask }}</h2>
 
         <div class="line"></div>
 
@@ -117,15 +175,16 @@ userTask();
 
         <!-- Список коментариев -->
         <div class="commets" v-for="comment in commentsThisTask" :key="comment.id">
-          <h1 style="color: silver;"> {{ userData.userRole }}: {{ userData.userName }}</h1>
+          <!-- * -->
+          <h1 style="color: silver;"> {{ getUserName(comment.userId) }} </h1> 
          <h1>{{ comment.comment }}</h1>
         </div>
 
         <div class="line"></div>
 
         <section class="action">
-          <UIcomponentsButton v-if="userData.userRole == 'admin'" value="Удалить Задачу" color="#fff" background="red"/>
-          <UIcomponentsButton value="Задача готова" color="#fff" background="#000"/>
+          <UIcomponentsButton @click="delTask" v-if="userData.userRole == 'admin'" value="Удалить Задачу" color="#fff" background="red"/>
+          <UIcomponentsButton @click="isReadyTask" :value="findActiveData?.isReady == true ? 'Востановить задачу' : 'Задача готова' " color="#fff" background="#000"/>
           <UIcomponentsButton @click="emits('close')" value="Закрыть" color="#000" background="#fff" />
         </section>
 
@@ -176,11 +235,15 @@ header{
   background-color: #000;
   color: #fff;
 }
+.commets h1{
+  white-space: normal;
+  word-wrap: break-word;
+}
 
 /* действие */
 .action{
   display: flex;
   justify-content: space-around;
-  margin-top: 5vh;
+  margin: 5vh 5vh;
 }
 </style>

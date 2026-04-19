@@ -44,6 +44,11 @@ let taskActive = (id: string) => {
   Task.value = true;
   idTaskActive.value = id;
 }
+
+// обнова списка полсе закрытие компонента
+let refreshTask = () => {
+  taskRefresh();
+}
 </script>
 
 <template>
@@ -58,7 +63,7 @@ let taskActive = (id: string) => {
         <div @click="taskActive(task.id)" v-for="task in auntifikateTasks?.slice().reverse()" class="tasks">
           <!-- тут будет высвечиватся задачи -->
            <div>
-              <h1 class="nameTask">Название: {{ task.nameTask }}</h1>
+              <h1 style="white-space: normal; word-wrap: break-word;" class="nameTask">Название: {{ task.nameTask }}</h1>
               <h2>Доступность: {{ task. userId == 'Свободная задача' ? 'Свободная задача' : 'Задача уже назначена'}}</h2>
            </div>
            <div class="rightUi">
@@ -70,7 +75,7 @@ let taskActive = (id: string) => {
 
       <section v-if="Task" class="rightData">
         <!-- подробнее о задаче -->
-        <TaskIn @close="Task = false" :idTaskActive></TaskIn>
+        <TaskIn @close="Task = false" :idTaskActive @refreshTask="refreshTask"></TaskIn>
       </section>
     </section>
 </template>
